@@ -5,6 +5,7 @@ var domify = require('min-dom').domify,
     domMatches = require('min-dom').matches,
     domDelegate = require('min-dom').delegate,
     domQuery = require('min-dom').query,
+    domQueryAll = require('min-dom').queryAll,
     domEvent = require('min-dom').event,
     domAttr = require('min-dom').attr;
 
@@ -184,7 +185,7 @@ ScrollTabs.prototype.getTabsContainerNode = function () {
  * @return {Array<DOMElement>}
  */
 ScrollTabs.prototype.getAllTabNodes = function () {
-  return domQuery.all(this.options.selectors.tab, this.container);
+  return domQueryAll(this.options.selectors.tab, this.container);
 };
 
 
