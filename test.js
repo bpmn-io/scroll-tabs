@@ -39,6 +39,27 @@ describe('scrollTabs', function() {
   });
 
 
+  it('should allow registration of events', function() {
+
+    // given
+    var scroller = scrollTabs(node, {
+      selectors: {
+        tabsContainer: '.my-tabs-container',
+        tab: '.my-tab',
+        ignore: '.ignore-me',
+        active: '.i-am-active'
+      }
+    });
+
+    // then
+    expect(function() {
+      scroller.on('scroll', function() {
+
+      });
+    }).not.to.throw;
+  });
+
+
   it('should act as singleton', function() {
 
     // given
