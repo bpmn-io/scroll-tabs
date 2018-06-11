@@ -7,9 +7,11 @@ var domify = require('min-dom').domify;
 var TEST_MARKUP =
   '<div>' +
     '<ul class="my-tabs-container">' +
-      '<li class="my-tab i-am-active" data-id="A"></li>' +
-      '<li class="my-tab" data-id="B"></li>' +
-      '<li class="my-tab ignore-me" data-id="C"></li>' +
+      '<li class="my-tab i-am-active" data-id="A">A</li>' +
+      '<li class="my-tab" data-id="B">B</li>' +
+      '<li class="my-tab" data-id="C">C</li>' +
+      '<li class="my-tab" data-id="D">D</li>' +
+      '<li class="my-tab ignore-me" data-id="IGNORE">IGNORE</li>' +
     '</ul>' +
   '</div>';
 
@@ -19,6 +21,8 @@ describe('scrollTabs', function() {
 
   beforeEach(function() {
     node = domify(TEST_MARKUP);
+
+    document.body.appendChild(node);
   });
 
 
@@ -54,9 +58,9 @@ describe('scrollTabs', function() {
     // then
     expect(function() {
       scroller.on('scroll', function() {
-
+        console.log('scroll');
       });
-    }).not.to.throw;
+    }).not.to.throw();
   });
 
 
