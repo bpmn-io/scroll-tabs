@@ -12,9 +12,7 @@ var domify = require('min-dom').domify,
 var filter = require('min-dash').filter,
     assign = require('min-dash').assign;
 
-var inherits = require('inherits');
-
-var EventEmitter = require('mitt');
+var createEmitter = require('mitt');
 
 var DEFAULT_OPTIONS = {
   scrollSymbolLeft: '‹',
@@ -90,7 +88,7 @@ var DEFAULT_OPTIONS = {
 function ScrollTabs($el, options) {
 
   // we are an event emitter
-  EventEmitter.call(this);
+  assign(this, createEmitter());
 
   this.options = options = assign({}, DEFAULT_OPTIONS, options);
   this.container = $el;
@@ -99,8 +97,6 @@ function ScrollTabs($el, options) {
 
   this._bindEvents($el);
 }
-
-inherits(ScrollTabs, EventEmitter);
 
 
 /**
