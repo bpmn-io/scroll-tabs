@@ -1,19 +1,19 @@
 'use strict';
 
-var domify = require('min-dom/lib/domify'),
-    domClasses = require('min-dom/lib/classes'),
-    domMatches = require('min-dom/lib/matches'),
-    domDelegate = require('min-dom/lib/delegate'),
-    domQuery = require('min-dom/lib/query'),
-    domEvent = require('min-dom/lib/event'),
-    domAttr = require('min-dom/lib/attr');
+var domify = require('min-dom').domify,
+    domClasses = require('min-dom').classes,
+    domMatches = require('min-dom').matches,
+    domDelegate = require('min-dom').delegate,
+    domQuery = require('min-dom').query,
+    domEvent = require('min-dom').event,
+    domAttr = require('min-dom').attr;
 
-var filter = require('lodash/collection/filter'),
-    assign = require('lodash/object/assign');
+var filter = require('min-dash').filter,
+    assign = require('min-dash').assign;
 
 var inherits = require('inherits');
 
-var EventEmitter = require('events');
+var EventEmitter = require('mitt');
 
 var DEFAULT_OPTIONS = {
   scrollSymbolLeft: '‹',
