@@ -1,18 +1,20 @@
-'use strict';
+import {
+  domify,
+  classes as domClasses,
+  matches as domMatches,
+  delegate as domDelegate,
+  query as domQuery,
+  queryAll as domQueryAll,
+  event as domEvent,
+  attr as domAttr
+} from 'min-dom';
 
-var domify = require('min-dom').domify,
-    domClasses = require('min-dom').classes,
-    domMatches = require('min-dom').matches,
-    domDelegate = require('min-dom').delegate,
-    domQuery = require('min-dom').query,
-    domQueryAll = require('min-dom').queryAll,
-    domEvent = require('min-dom').event,
-    domAttr = require('min-dom').attr;
+import {
+  filter,
+  assign
+} from 'min-dash';
 
-var filter = require('min-dash').filter,
-    assign = require('min-dash').assign;
-
-var createEmitter = require('mitt');
+import createEmitter from 'mitt';
 
 var DEFAULT_OPTIONS = {
   scrollSymbolLeft: '‹',
@@ -170,7 +172,7 @@ ScrollTabs.prototype.getActiveTabNode = function() {
  *
  * @return {DOMElement}
  */
-ScrollTabs.prototype.getTabsContainerNode = function () {
+ScrollTabs.prototype.getTabsContainerNode = function() {
   return domQuery(this.options.selectors.tabsContainer, this.container);
 };
 
@@ -180,7 +182,7 @@ ScrollTabs.prototype.getTabsContainerNode = function () {
  *
  * @return {Array<DOMElement>}
  */
-ScrollTabs.prototype.getAllTabNodes = function () {
+ScrollTabs.prototype.getAllTabNodes = function() {
   return domQueryAll(this.options.selectors.tab, this.container);
 };
 
@@ -353,7 +355,7 @@ ScrollTabs.prototype.update = function() {
 };
 
 
-////// module exports /////////////////////////////////////////
+// exports ////////////////
 
 /**
  * Create a scrollTabs instance on the given element.
@@ -363,7 +365,7 @@ ScrollTabs.prototype.update = function() {
  *
  * @return {ScrollTabs}
  */
-function create($el, options) {
+export default function create($el, options) {
 
   var scrollTabs = get($el);
 
@@ -375,11 +377,6 @@ function create($el, options) {
 
   return scrollTabs;
 }
-
-/**
- * Factory function to get or create a new scroll tabs instance.
- */
-module.exports = create;
 
 
 /**
@@ -393,7 +390,4 @@ function get($el) {
   return $el.__scrollTabs;
 }
 
-/**
- * Getter to retrieve an already initialized scroll tabs instance.
- */
-module.exports.get = get;
+create.get = get;

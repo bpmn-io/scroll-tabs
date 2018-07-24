@@ -1,3 +1,5 @@
+> As of version `1.0.0` this library exposes ES modules. Use an ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to bundle it for the browser.
+
 # scroll-tabs
 
 > This component adds the functionality to scroll over a list of tabs.
@@ -18,7 +20,7 @@ changed relative to the old active tab.
 ## How to use
 
 ### Provide a tab container
- 
+
 ```javascript
 var $el = (
   <div>
@@ -43,7 +45,7 @@ var scroller = scrollTabs($el, {
   }
 });
 ```
- 
+
 ### Listen to the scroll event
 
 ```javascript
