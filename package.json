@@ -1,6 +1,6 @@
 {
   "name": "scroll-tabs",
-  "version": "0.3.2",
+  "version": "1.0.0",
   "description": "A tab scrolling component",
   "main": "index.js",
   "scripts": {
