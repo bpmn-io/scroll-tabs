@@ -2,9 +2,14 @@
 
 # scroll-tabs
 
-> This component adds the functionality to scroll over a list of tabs.
-
 [![Build Status](https://travis-ci.org/bpmn-io/scroll-tabs.svg?branch=master)](https://travis-ci.org/bpmn-io/scroll-tabs)
+
+A tiny utility that adds tab scrolling functionality.
+
+![scrollTabs screenshot](https://raw.githubusercontent.com/bpmn-io/scroll-tabs/master/docs/screencast.gif "scrollTabs screenshot")
+
+
+## How it works
 
 ScrollTabs adds scroll buttons on the left and right side of the tabs container
 if not all tabs are visible. It also adds a mouse wheel listener on the
@@ -15,7 +20,6 @@ a 'scroll' event is being fired. This event contains the node elements
 of the new and old active tab, and the direction in which the tab has
 changed relative to the old active tab.
 
-![scrollTabs screenshot](https://raw.githubusercontent.com/bpmn-io/scroll-tabs/master/docs/screencast.gif "scrollTabs screenshot")
 
 ## How to use
 
