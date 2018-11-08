@@ -66,6 +66,33 @@ Every time tabs change and or the tab container resizes, update the scroller:
 scroller.update();
 ```
 
+### (optional) Pass a `normalizeWheel` function to options to normalize scrolling speed:
+
+Every time user uses wheel or touchpad to scroll tabs `eventHandler` will be called.
+
+```javascript
+function normalizeWheel(scroll) {
+  ...
+  return function eventHandler(event) {
+    event.preventDefault();
+
+    ...
+
+    scroll(direction);
+  }
+}
+
+var scroller = scrollTabs(tabBarNode, {
+  selectors: {
+    tabsContainer: '.my-tabs-container',
+    tab: '.my-tab',
+    ignore: '.ignore-me',
+    active: '.i-am-active'
+  },
+  normalizeWheel: normalizeWheel
+});
+```
+
 ## How to test
 
 ```
