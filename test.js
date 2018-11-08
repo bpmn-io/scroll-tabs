@@ -1,3 +1,5 @@
+/* global sinon */
+
 import scrollTabs from '.';
 
 import {
@@ -85,8 +87,96 @@ describe('scrollTabs', function() {
   });
 
 
-  it('scrolling');
+  describe('scrolling', function() {
+
+    it('should scroll for each wheel event per default', function() {
+
+      // given
+      var scrollSpy = sinon.spy();
+
+      if (!Math.sign) {
+        Math.sign = signPolyfill;
+      }
+
+      var scroller = scrollTabs(node, {
+        selectors: {
+          tabsContainer: '.my-tabs-container',
+          tab: '.my-tab',
+          ignore: '.ignore-me',
+          active: '.i-am-active'
+        }
+      });
+
+      scroller.on('scroll', scrollSpy);
+
+      // when
+      var wheelEvent = getWheelEvent(1);
+
+      node.dispatchEvent(wheelEvent);
+      node.dispatchEvent(wheelEvent);
+
+      // then
+      expect(scrollSpy).to.be.calledTwice;
+    });
+
+
+    it('should allow to use a custom function to normalize scrolling speed', function() {
+
+      // given
+      var eventHandlerSpy = sinon.spy(),
+          normalizeWheelStub = sinon.stub().returns(eventHandlerSpy);
+
+      scrollTabs(node, {
+        selectors: {
+          tabsContainer: '.my-tabs-container',
+          tab: '.my-tab',
+          ignore: '.ignore-me',
+          active: '.i-am-active'
+        },
+        normalizeWheel: normalizeWheelStub
+      });
+
+      // when
+      var wheelEvent = getWheelEvent(1);
+
+      node.dispatchEvent(wheelEvent);
+      node.dispatchEvent(wheelEvent);
+
+      // then
+      expect(normalizeWheelStub).to.be.calledOnce;
+      expect(eventHandlerSpy).to.be.calledTwice;
+      expect(eventHandlerSpy).to.be.calledWith(wheelEvent);
+    });
+
+  });
+
 
   it('update');
 
 });
+
+
+
+// helpers /////////
+
+function getWheelEvent(deltaY) {
+  var event;
+
+  try {
+    event = new WheelEvent('wheel', { deltaY: deltaY });
+  } catch (error) {
+    event = document.createEvent('CustomEvent');
+    event.initCustomEvent('wheel');
+    event.deltaY = deltaY;
+  }
+
+  return event;
+}
+
+/**
+ * Polyfill for `Math.sign` for PhantomJS
+ * @param {any} value
+ */
+function signPolyfill(value) {
+  return (value > 0 ? 1 : 0) + (value < 0 ? -1 : 0) || +value;
+}

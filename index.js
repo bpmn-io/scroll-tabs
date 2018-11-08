@@ -18,7 +18,8 @@ import createEmitter from 'mitt';
 
 var DEFAULT_OPTIONS = {
   scrollSymbolLeft: '‹',
-  scrollSymbolRight: '›'
+  scrollSymbolRight: '›',
+  normalizeWheel: normalizeWheel
 };
 
 
@@ -33,6 +34,11 @@ var DEFAULT_OPTIONS = {
  * a 'scroll' event is being fired. This event contains the node elements
  * of the new and old active tab, and the direction in which the tab has
  * changed relative to the old active tab.
+ *
+ * Optionally, you can add to config a `normalizeWheel` option. This should
+ * be a function returning an event handler which should pass a `Number` to
+ * received callback. With custom `normalizeWheel` function you can normalize
+ * scrolling speed between browsers and devices (touch pad, mouse).
  *
  * @example:
  * (1) provide a tabs-container:
@@ -77,6 +83,38 @@ var DEFAULT_OPTIONS = {
  * scroller.update();
  *
  *
+ * (optionally) pass a `normalizeWheel` function to options to throttle scroll events:
+ *
+ *  function normalizeWheel(scroll) {
+ *    var throttled = false;
+ *
+ *    return function(event) {
+ *      var direction = Math.sign(event.deltaY);
+ *
+ *      event.preventDefault();
+ *
+ *      if (!throttled) {
+ *        throttled = true;
+ *        setTimeout(function() {
+ *          throttled = false;
+ *        }, 50)
+ *
+ *        scroll(direction);
+ *      }
+ *    }
+ *  }
+ *
+ *  var scroller = scrollTabs(tabBarNode, {
+ *    selectors: {
+ *      tabsContainer: '.my-tabs-container',
+ *      tab: '.my-tab',
+ *      ignore: '.ignore-me',
+ *      active: '.i-am-active'
+ *    },
+ *    normalizeWheel: normalizeWheel
+ *  });
+ *
+ *
  * @param  {DOMElement} el
  * @param  {Object} options
  * @param  {Object} options.selectors
@@ -86,6 +124,7 @@ var DEFAULT_OPTIONS = {
  * @param  {String} options.selectors.active selector for the current active tab
  * @param  {String} [options.scrollSymbolLeft]
  * @param  {String} [options.scrollSymbolRight]
+ * @param  {Function} [options.normalizeWheel] middleware function to normalize scrolling speed
  */
 function ScrollTabs($el, options) {
 
@@ -254,13 +293,10 @@ ScrollTabs.prototype._bindTabClickEvents = function(node) {
  * @param {DOMElement} node
  */
 ScrollTabs.prototype._bindWheelEvent = function(node) {
-  var self = this;
+  var self = this,
+      normalizeWheel = this.options.normalizeWheel;
 
-  domEvent.bind(node, 'wheel', function(e) {
-
-    // scroll direction (-1: left, 1: right)
-    var direction = Math.sign(e.deltaY);
-
+  domEvent.bind(node, 'wheel', normalizeWheel(function(direction) {
     var oldActiveTab = self.getActiveTabNode();
 
     var newActiveTab = self.getAdjacentTab(oldActiveTab, direction);
@@ -269,9 +305,7 @@ ScrollTabs.prototype._bindWheelEvent = function(node) {
       self.scrollToTabNode(newActiveTab);
       self.emit('scroll', newActiveTab, oldActiveTab, direction);
     }
-
-    e.preventDefault();
-  });
+  }));
 };
 
 /**
@@ -391,3 +425,22 @@ function get($el) {
 }
 
 create.get = get;
+
+
+
+// helpers ////////////////
+
+function normalizeWheel(scroll) {
+  /**
+   * @param {WheelEvent} event
+   */
+  function normalizedScroll(event) {
+    var direction = Math.sign(event.deltaY);
+
+    event.preventDefault();
+
+    return scroll(direction);
+  }
+
+  return normalizedScroll;
+}
