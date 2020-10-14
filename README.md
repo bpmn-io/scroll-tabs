@@ -2,7 +2,7 @@
 
 # scroll-tabs
 
-[![Build Status](https://travis-ci.org/bpmn-io/scroll-tabs.svg?branch=master)](https://travis-ci.org/bpmn-io/scroll-tabs)
+[![Build Status](https://travis-ci.com/bpmn-io/scroll-tabs.svg?branch=master)](https://travis-ci.com/bpmn-io/scroll-tabs)
 
 A tiny utility that adds tab scrolling functionality.
 
