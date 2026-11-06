@@ -6,6 +6,8 @@ All notable changes to [scroll-tabs](https://github.com/bpmn-io/scroll-tabs) are
 
 ___Note:__ Yet to be released changes appear here._
 
+* `DEPS`: update to `min-dash@5.1.0`
+
 ## 1.0.0
 
 ### Breaking Changes
