@@ -8,6 +8,7 @@ ___Note:__ Yet to be released changes appear here._
 
 * `DEPS`: update to `min-dash@5.1.0`
 * `DEPS`: update to `min-dom@5.3.0`
+* `DEPS`: update to `mitt@3.0.1`
 
 ## 1.0.0
 
