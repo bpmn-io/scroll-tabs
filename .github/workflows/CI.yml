@@ -1,0 +1,27 @@
+name: CI
+on: [ push, pull_request ]
+jobs:
+  Build:
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        # karma@2 / log4js crash on Node >= 23
+        node-version: [ 20, 22 ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      # no lock file; peer dependency ranges of karma-sinon-chai are outdated
+      run: npm install --legacy-peer-deps
+    - name: Build
+      run: npm run all
+      env:
+        TEST_BROWSERS: ChromeHeadless
