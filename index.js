@@ -323,9 +323,11 @@ ScrollTabs.prototype.scrollToTabNode = function(tabNode) {
       containerScrollLeft = tabsContainerNode.scrollLeft;
 
   if (containerScrollLeft > tabOffsetLeft) {
+
     // scroll to the left, if the tab is overflowing on the left side
     tabsContainerNode.scrollLeft = 0;
   } else if (tabOffsetRight > containerWidth) {
+
     // scroll to the right, if the tab is overflowing on the right side
     tabsContainerNode.scrollLeft = tabOffsetRight - containerWidth;
   }
@@ -349,6 +351,7 @@ ScrollTabs.prototype.update = function() {
   domClasses(this.container).toggle(overflowClass, overflow);
 
   if (overflow) {
+
     // make sure the current active tab is always visible
     this.scrollToTabNode(this.getActiveTabNode());
   }
