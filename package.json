@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "min-dash": "^5.1.0",
-    "min-dom": "^3.1.0",
+    "min-dom": "^5.3.0",
     "mitt": "^1.1.3"
   }
 }
