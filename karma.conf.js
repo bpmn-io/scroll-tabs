@@ -6,6 +6,7 @@ var browsers =
     .split(/\s*,\s*/g)
     .map(function(browser) {
       if (browser === 'ChromeHeadless') {
+
         // workaround https://github.com/GoogleChrome/puppeteer/issues/290
         if (process.platform === 'linux') {
           return 'ChromeHeadless_Linux';
